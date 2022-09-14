@@ -33,10 +33,9 @@ def print_lines(app, what, name, obj, options, lines):
 def param_format_basic(app, what, name, obj, options, lines):
     # if what == 'module':
     #     lines = ["start"]
-
     if what == 'class' and isinstance(obj, param.parameterized.ParameterizedMetaclass):
-        lines += ['..', DEDUPLICATION_TAG]  # Prevent numpydoc from mangling the docstring
-        lines += ['Interactive Params', '------------------']
+        # lines += ['..', DEDUPLICATION_TAG]  # Prevent numpydoc from mangling the docstring
+        lines += ['Other Parameters', '----------------']
 
         try:
             lines.insert(0, '')
@@ -90,11 +89,13 @@ def param_format_basic(app, what, name, obj, options, lines):
 
             display_name = pobj.label or ' '.join(s.capitalize() for s in child.split('_'))
             if params_str.lstrip():
-                lines.extend([f"| **{display_name}** (*{ptype}*, {params_str})"])
+                lines.extend([f"{display_name}: {ptype} ({params_str})"])
             else:
-                lines.extend([f"| **{display_name}** (*{ptype}*)"])
-            lines.extend(["| " + doc])
+                lines.extend([f"{display_name}: {ptype}"])
+            lines.extend(["    " + doc])
             lines.append('')
+
+
 
         if inherited:
             lines.extend(["Additional GUI elements on: "]+inherited)
