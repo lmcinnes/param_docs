@@ -36,6 +36,7 @@ def param_format_basic(app, what, name, obj, options, lines):
 
     if what == 'class' and isinstance(obj, param.parameterized.ParameterizedMetaclass):
         lines += ['..', DEDUPLICATION_TAG]  # Prevent numpydoc from mangling the docstring
+        lines += ['Interactive Params', '------------------']
 
         try:
             lines.insert(0, '')
@@ -78,7 +79,7 @@ def param_format_basic(app, what, name, obj, options, lines):
                 # This formats default='apple', objects=['apple', 'pear', 'banana'] etc
                 if (m[0][0] != "_" and m[0] not in IGNORED_ATTRS and
                     not inspect.ismethod(m[1]) and not inspect.isfunction(m[1]) and
-                    m[1] is not None and DEFAULT_VALUES.get(m[0]) != m[1] and
+                    m[1] is not None and # DEFAULT_VALUES.get(m[0]) != m[1] and
                     (m[0] != 'label' or pobj.label != label)):
                     subtitutions = {'objects': 'options'}
                     key = subtitutions.get(m[0], m[0])
